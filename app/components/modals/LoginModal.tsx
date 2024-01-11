@@ -1,20 +1,17 @@
 'use client'
 
-import useRegisterModal from "@/app/hooks/useRegisterModal"
 import axios from "axios";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { Modal } from "./Modal";
 import { Heading } from "../Heading";
 import { Input } from "../inputs/Input";
-import { CheckCircleOutlined, GithubOutlined, GoogleOutlined, WarningOutlined } from "@ant-design/icons"
+import { CheckCircleOutlined, WarningOutlined } from "@ant-design/icons"
 import { notification } from "antd";
-import { Button } from "../Button";
 import useLoginModal from "@/app/hooks/useLoginModal";
 
-export function RegisterModal() {
+export function LoginModal() {
 
-    const registerModal = useRegisterModal();
     const loginModal = useLoginModal();
     const [isLoading, setIsLoading] = useState(false);
 
@@ -26,7 +23,6 @@ export function RegisterModal() {
         }
     } = useForm<FieldValues>({
         defaultValues: {
-            name: "",
             email: "",
             password: "",
         }
@@ -35,9 +31,9 @@ export function RegisterModal() {
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
         setIsLoading(true);
 
-        axios.post(`api/register`, data)
+        axios.post(`api/login`, data)
             .then(() => {
-                registerModal.onClose();
+                loginModal.onClose();
                 notification.success({
                     message: "Successfully!",
                     icon: 
@@ -65,16 +61,8 @@ export function RegisterModal() {
         <div className="flex flex-col gap-4">
             <Heading
                 title="Welcome to AirBnB"
-                subtitle="Create an account!"
+                subtitle="Login!"
                 center
-            />
-            <Input 
-                id="name"
-                label="Name"
-                disabled={isLoading}
-                register={register}
-                errors={errors}
-                required
             />
             <Input 
                 id="email"
@@ -97,54 +85,15 @@ export function RegisterModal() {
         </div>
     )
 
-    const footerContent = (
-        <div className='flex flex-col gap-4 mt-3'>
-            <hr />
-            <Button
-                outline
-                label="Continue with Google"
-                icon={<GoogleOutlined />}
-                onClick={()=> {}}
-            />
-            <Button
-                outline
-                label="Continue with Github"
-                icon={<GithubOutlined />}
-                onClick={()=> {}}
-            />
-            <div
-                className="
-                    text-neutral-500
-                    text-center
-                    mt-4
-                    font-light
-                "
-            >
-                <div className="flex flex-row justify-center items-center gap-2">
-                    <div>
-                        Already have an account?
-                    </div>
-                    <div
-                        onClick={registerModal.onClose}
-                        className="text-neutral-800 cursor-pointer hover:underline"
-                    >
-                        Log in
-                    </div>
-                </div>
-            </div>
-        </div>  
-    )
-
     return (
         <Modal
             disabled={isLoading}
-            isOpen={registerModal.isOpen}
-            title="Register"
+            isOpen={loginModal.isOpen}
+            title="Login"
             actionLabel="Continue"
-            onClose={registerModal.onClose}
+            onClose={loginModal.onClose}
             onSubmit={handleSubmit(onSubmit)}
             body={bodyContent}
-            footer={footerContent}
         />
     )
 }

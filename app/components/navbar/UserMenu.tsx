@@ -6,11 +6,13 @@ import { Avatar } from "antd"
 import { useCallback, useState } from "react"
 import { MenuItem } from "./MenuItem"
 import useRegisterModal from "@/app/hooks/useRegisterModal"
+import useLoginModal from "@/app/hooks/useLoginModal"
 
 export function UserMenu() {
 
     const [isOpen, setIsOpen] = useState(false);
     const registerModal = useRegisterModal();
+    const loginModal = useLoginModal();
 
     const toggleOpen = useCallback(() =>{
         setIsOpen((value) => !value);
@@ -36,11 +38,11 @@ export function UserMenu() {
                 </div>
             </div>
             {isOpen && (
-                <div className="absolute rounded-xl shadow-md w-[40px] md:w-3/4 bg-white overflow-hidden right-0 top-12 text-sm">
+                <div className="absolute rounded-xl shadow-md w-[100px] md:w-3/4 bg-white overflow-hidden right-0 top-12 text-sm">
                     <div className="flex flex-col cursor-pointer">
                         <>
                             <MenuItem 
-                                onClick={() => {}}
+                                onClick={loginModal.onOpen}
                                 label="Login"
                             />
                             <MenuItem 

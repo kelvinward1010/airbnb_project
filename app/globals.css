@@ -9,3 +9,11 @@
 html, body, :root{
   height: 100%;
 }
+
+.success-noti{
+  color: green;
+}
+
+.error-noti{
+  color: red;
+}
