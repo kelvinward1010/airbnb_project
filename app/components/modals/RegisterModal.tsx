@@ -11,6 +11,8 @@ export function RegisterModal() {
     const registerModal = useRegisterModal();
     const [isLoading, setIsLoading] = useState(false);
 
+    console.log(registerModal);
+
     const {
         register,
         handleSubmit,
