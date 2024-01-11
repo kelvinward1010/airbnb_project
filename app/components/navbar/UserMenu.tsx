@@ -5,10 +5,12 @@ import { IconMenu2 } from "@tabler/icons-react"
 import { Avatar } from "antd"
 import { useCallback, useState } from "react"
 import { MenuItem } from "./MenuItem"
+import useRegisterModal from "@/app/hooks/useRegisterModal"
 
 export function UserMenu() {
 
     const [isOpen, setIsOpen] = useState(false);
+    const registerModal = useRegisterModal();
 
     const toggleOpen = useCallback(() =>{
         setIsOpen((value) => !value);
@@ -42,7 +44,7 @@ export function UserMenu() {
                                 label="Login"
                             />
                             <MenuItem 
-                                onClick={() => {}}
+                                onClick={registerModal.onOpen}
                                 label="Sign Up"
                             />
                         </>
