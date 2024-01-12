@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
+import { HeartButton } from "../HeartButton";
 
 interface ListingCardProps{
     data?: Listing;
@@ -78,7 +79,8 @@ export const ListingCard: React.FC<ListingCardProps> = ({
                     />
 
                     <div className="absolute top-3 right-3">
-                        :3
+                        <HeartButton
+                        />
                     </div>
                 </div>
             </div>
