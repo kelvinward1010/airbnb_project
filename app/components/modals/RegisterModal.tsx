@@ -2,7 +2,7 @@
 
 import useRegisterModal from "@/app/hooks/useRegisterModal"
 import axios from "axios";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { Modal } from "./Modal";
 import { Heading } from "../Heading";
@@ -12,7 +12,6 @@ import { notification } from "antd";
 import { Button } from "../Button";
 import useLoginModal from "@/app/hooks/useLoginModal";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
 export function RegisterModal() {
 
@@ -68,6 +67,11 @@ export function RegisterModal() {
             redirect: false
         })
     }
+
+    const toggle = useCallback(() => {
+        registerModal.onClose();
+        loginModal.onOpen();
+    },[])
 
     const bodyContent = (
         <div className="flex flex-col gap-4">
@@ -133,7 +137,7 @@ export function RegisterModal() {
                         Already have an account?
                     </div>
                     <div
-                        onClick={registerModal.onClose}
+                        onClick={toggle}
                         className="text-neutral-800 cursor-pointer hover:underline"
                     >
                         Log in

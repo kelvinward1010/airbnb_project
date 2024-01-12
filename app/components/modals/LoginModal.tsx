@@ -1,21 +1,23 @@
 'use client'
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { Modal } from "./Modal";
 import { Heading } from "../Heading";
 import { Input } from "../inputs/Input";
 import { CheckCircleOutlined, GithubOutlined, GoogleOutlined, WarningOutlined } from "@ant-design/icons"
 import { notification } from "antd";
-import useLoginModal from "@/app/hooks/useLoginModal";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Button } from "../Button";
+import useLoginModal from "@/app/hooks/useLoginModal";
+import useRegisterModal from "@/app/hooks/useRegisterModal";
 
 export function LoginModal() {
 
     const router = useRouter();
     const loginModal = useLoginModal();
+    const registerModal = useRegisterModal();
     const [isLoading, setIsLoading] = useState(false);
 
     const {
@@ -64,6 +66,17 @@ export function LoginModal() {
             })
     }
 
+    const onSocialAction = (action: string) => {
+        signIn(action, {
+            redirect: false
+        })
+    }
+
+    const toggle = useCallback(() => {
+        loginModal.onClose();
+        registerModal.onOpen();
+    },[])
+
     const bodyContent = (
         <div className="flex flex-col gap-4">
             <Heading
@@ -91,12 +104,6 @@ export function LoginModal() {
             />
         </div>
     )
-
-    const onSocialAction = (action: string) => {
-        signIn(action, {
-            redirect: false
-        })
-    }
 
     const footerContent = (
         <div className='flex flex-col gap-4 mt-3'>
@@ -126,7 +133,7 @@ export function LoginModal() {
                         Don't have an account?
                     </div>
                     <div
-                        onClick={loginModal.onClose}
+                        onClick={toggle}
                         className="text-neutral-800 cursor-pointer hover:underline"
                     >
                         Sign Up

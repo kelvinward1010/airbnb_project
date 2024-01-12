@@ -1,9 +1,10 @@
 'use client'
 
-import { IconBeach, IconWindmill } from "@tabler/icons-react";
+import { IconBeach, IconCampfire, IconDiamond, IconSailboat, IconTower, IconWindmill } from "@tabler/icons-react";
 import { Container } from "../Container";
 import { CategoryBox } from "../CategoryBox";
 import { usePathname, useSearchParams } from "next/navigation";
+import { IconBoxModel2 } from "@tabler/icons-react";
 
 export const categories = [
     {
@@ -18,7 +19,7 @@ export const categories = [
     },
     {
         label: 'Modern',
-        icon: <IconWindmill />,
+        icon: <IconBoxModel2 />,
         description: 'This property is modern!'
     },
     {
@@ -38,7 +39,7 @@ export const categories = [
     },
     {
         label: 'Lake',
-        icon: <IconWindmill />,
+        icon: <IconSailboat />,
         description: 'This property is close to a lake!'
     },
     {
@@ -48,12 +49,12 @@ export const categories = [
     },
     {
         label: 'Castles',
-        icon: <IconWindmill />,
+        icon: <IconTower />,
         description: 'This property is in a castle!'
     },
     {
         label: 'Camping',
-        icon: <IconWindmill />,
+        icon: <IconCampfire />,
         description: 'This property has camping activities!'
     },
     {
@@ -78,7 +79,7 @@ export const categories = [
     },
     {
         label: 'Lux',
-        icon: <IconWindmill />,
+        icon: <IconDiamond />,
         description: 'This property is luxurious!'
     },
 ]

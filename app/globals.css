@@ -17,3 +17,10 @@ html, body, :root{
 .error-noti{
   color: red;
 }
+
+.leaflet-bottom,
+.leaflet-control,
+.leaflet-pane,
+.leaflet-top{
+  z-index: 0 !important;
+}
