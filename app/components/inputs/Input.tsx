@@ -8,7 +8,7 @@ interface InputProps {
     label: string;
     type?: string;
     disabled?: boolean;
-    formatPrice?: string;
+    formatPrice?: boolean;
     required?: boolean;
     register: UseFormRegister<FieldValues>;
     errors: FieldErrors;
@@ -27,7 +27,7 @@ export const Input: React.FC<InputProps> = ({
     return (
         <div className="w-full relative">
             {formatPrice && (
-                <DollarCircleOutlined />
+                <DollarCircleOutlined  className="text-neutral-700 absolute top-6 left-2"/>
             )}
             <input 
                 id={id}
