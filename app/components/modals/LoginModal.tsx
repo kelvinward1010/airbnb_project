@@ -1,17 +1,20 @@
 'use client'
 
-import axios from "axios";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { Modal } from "./Modal";
 import { Heading } from "../Heading";
 import { Input } from "../inputs/Input";
-import { CheckCircleOutlined, WarningOutlined } from "@ant-design/icons"
+import { CheckCircleOutlined, GithubOutlined, GoogleOutlined, WarningOutlined } from "@ant-design/icons"
 import { notification } from "antd";
 import useLoginModal from "@/app/hooks/useLoginModal";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { Button } from "../Button";
 
 export function LoginModal() {
 
+    const router = useRouter();
     const loginModal = useLoginModal();
     const [isLoading, setIsLoading] = useState(false);
 
@@ -31,16 +34,20 @@ export function LoginModal() {
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
         setIsLoading(true);
 
-        axios.post(`api/login`, data)
+        signIn("credentials", {
+            ...data,
+            redirect: false
+        })
             .then(() => {
-                loginModal.onClose();
                 notification.success({
-                    message: "Successfully!",
+                    message: "Login sucessfully!",
                     icon: 
                         <CheckCircleOutlined
                             className="success-noti"
                         />
                 })
+                router.refresh();
+                loginModal.onClose();
             })
             .catch((error) => {
                 notification.error({
@@ -61,7 +68,7 @@ export function LoginModal() {
         <div className="flex flex-col gap-4">
             <Heading
                 title="Welcome to AirBnB"
-                subtitle="Login!"
+                subtitle="Login to your account!"
                 center
             />
             <Input 
@@ -85,6 +92,50 @@ export function LoginModal() {
         </div>
     )
 
+    const onSocialAction = (action: string) => {
+        signIn(action, {
+            redirect: false
+        })
+    }
+
+    const footerContent = (
+        <div className='flex flex-col gap-4 mt-3'>
+            <hr />
+            <Button
+                outline
+                label="Continue with Google"
+                icon={<GoogleOutlined />}
+                onClick={()=> onSocialAction('google')}
+            />
+            <Button
+                outline
+                label="Continue with Github"
+                icon={<GithubOutlined />}
+                onClick={()=> onSocialAction('github')}
+            />
+            <div
+                className="
+                    text-neutral-500
+                    text-center
+                    mt-4
+                    font-light
+                "
+            >
+                <div className="flex flex-row justify-center items-center gap-2">
+                    <div>
+                        Don't have an account?
+                    </div>
+                    <div
+                        onClick={loginModal.onClose}
+                        className="text-neutral-800 cursor-pointer hover:underline"
+                    >
+                        Sign Up
+                    </div>
+                </div>
+            </div>
+        </div>  
+    )
+
     return (
         <Modal
             disabled={isLoading}
@@ -94,6 +145,7 @@ export function LoginModal() {
             onClose={loginModal.onClose}
             onSubmit={handleSubmit(onSubmit)}
             body={bodyContent}
+            footer={footerContent}
         />
     )
 }

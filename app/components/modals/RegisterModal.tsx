@@ -11,6 +11,8 @@ import { CheckCircleOutlined, GithubOutlined, GoogleOutlined, WarningOutlined } 
 import { notification } from "antd";
 import { Button } from "../Button";
 import useLoginModal from "@/app/hooks/useLoginModal";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export function RegisterModal() {
 
@@ -61,6 +63,12 @@ export function RegisterModal() {
             })
     }
 
+    const onSocialAction = (action: string) => {
+        signIn(action, {
+            redirect: false
+        })
+    }
+
     const bodyContent = (
         <div className="flex flex-col gap-4">
             <Heading
@@ -104,13 +112,13 @@ export function RegisterModal() {
                 outline
                 label="Continue with Google"
                 icon={<GoogleOutlined />}
-                onClick={()=> {}}
+                onClick={()=> onSocialAction('google')}
             />
             <Button
                 outline
                 label="Continue with Github"
                 icon={<GithubOutlined />}
-                onClick={()=> {}}
+                onClick={()=> onSocialAction('github')}
             />
             <div
                 className="
