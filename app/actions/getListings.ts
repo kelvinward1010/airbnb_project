@@ -9,6 +9,7 @@ export interface IListingsParams {
   endDate?: string;
   locationValue?: string;
   category?: string;
+  price?: number;
 }
 
 export default async function getListings(params: IListingsParams) {
@@ -84,7 +85,7 @@ export default async function getListings(params: IListingsParams) {
 
         const safeListings = listings.map((listing) => ({
             ...listing,
-            createdAt: listing.createAt.toISOString(),
+            createAt: listing.createAt.toISOString(),
         }));
 
         return safeListings;

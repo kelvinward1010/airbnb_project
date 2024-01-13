@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { HeartButton } from "../HeartButton";
+import { Button } from "../Button";
 
 interface ListingCardProps{
     data?: Listing;
@@ -49,7 +50,7 @@ export const ListingCard: React.FC<ListingCardProps> = ({
         return data?.price;
     },[])
 
-    const reservation = useMemo(() => {
+    const reservationDate = useMemo(() => {
         if(!reservations) return null;
 
         const start = new Date(reservations.startDate);
@@ -69,6 +70,7 @@ export const ListingCard: React.FC<ListingCardProps> = ({
                         fill
                         alt="Listing"
                         src={data?.image as string}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className="
                             w-full
                             h-full
@@ -80,9 +82,35 @@ export const ListingCard: React.FC<ListingCardProps> = ({
 
                     <div className="absolute top-3 right-3">
                         <HeartButton
+                            listingId={data?.id as string}
+                            currentUser={currentUser}
                         />
                     </div>
                 </div>
+                <div className="font-semibold text-lg">
+                    {location?.region}, {location?.label}
+                </div>
+                <div className="font-light text-neutral-500">
+                    {reservationDate || data?.category}
+                </div>
+                <div className="flex flex-row items-center gap-1">
+                    <div className="font-semibold">
+                        ${price}
+                    </div>
+                    {!reservations && (
+                        <div className="font-light">
+                            night
+                        </div>
+                    )}
+                </div>
+                {onAction && actionLabel && (
+                    <Button
+                        disabled={disabled}
+                        small
+                        label={actionLabel}
+                        onClick={handleCancel}
+                    />
+                )}
             </div>
         </div>
     )
