@@ -71,7 +71,7 @@ export function RegisterModal() {
     const toggle = useCallback(() => {
         registerModal.onClose();
         loginModal.onOpen();
-    },[])
+    },[registerModal, loginModal])
 
     const bodyContent = (
         <div className="flex flex-col gap-4">

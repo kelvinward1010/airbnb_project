@@ -49,7 +49,7 @@ export const ListingCard: React.FC<ListingCardProps> = ({
         }
 
         return data?.price;
-    },[])
+    },[reservations, data?.price])
 
     const reservationDate = useMemo(() => {
         if(!reservations) return null;
